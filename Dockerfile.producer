@@ -1,0 +1,23 @@
+# Dockerfile.producer
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Instalar netcat-openbsd para el waiting loop
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends netcat-openbsd \
+ && rm -rf /var/lib/apt/lists/*
+
+# Instala dependencias de Python
+COPY requirements-producer.txt .
+RUN pip install --no-cache-dir -r requirements-producer.txt
+
+# Copia código y datos
+COPY src/ ./src
+COPY data/ ./data
+
+# Asegura que Python busque paquetes en /app/src
+ENV PYTHONPATH=/app/src
+
+# Arranque con espera activa a Kafka
+CMD ["sh", "-c", "until nc -z kafka 9092; do echo '⏳ Esperando a Kafka...'; sleep 1; done && python -m data_producer.producer"]
