@@ -1,2 +1,11 @@
 /venv
 /notebooks/catboost_info
+venv/
+__pycache__/
+*.pyc
+.git/
+dist/
+build/
+*.egg-info
+.pytest_cache/
+*.log
