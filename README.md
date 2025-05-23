@@ -54,7 +54,7 @@ Pipeline ETL y análisis predictivo para estudiar los factores que influyen en l
 🚀 **Guía de Configuración**  
 1. **Clonar el Repositorio**  
    ```bash
-   git clone https://github.com/XGabrielEdwardsX/workshop3/tree/develop
+   git clone https://github.com/XGabrielEdwardsX/workshop3
    cd workshop3
    ```
 
