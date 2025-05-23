@@ -1,0 +1,18 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends netcat-openbsd \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-producer.txt .
+RUN pip install --no-cache-dir -r requirements-producer.txt
+
+COPY src/ ./src
+COPY data/test_data/ ./data/test_data/
+
+ENV PYTHONPATH=/app/src
+
+CMD ["sh", "-c", "until nc -z kafka 9092; do echo '⏳ Esperando a Kafka...'; sleep 1; done && python -m data_producer.producer"]

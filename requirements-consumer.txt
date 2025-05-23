@@ -1,0 +1,3 @@
+confluent-kafka
+catboost
+mysql-connector-python
